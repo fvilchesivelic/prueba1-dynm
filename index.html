@@ -1,0 +1,207 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>The Bespin Times</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a id="gotica" class="navbar-brand" href="#">The Bespin Times</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#here1">Bespin <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#aca">Lando</a>
+            </li>
+  
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main">
+      <div id="here1" class="jumbotron wallpaper">
+               <div id="inicio">
+                <h2 class="featurette-heading">Planeta Bespin<br> <span class="text-muted">El más grande de todos.</span></h2>
+                  <p class="lead">Bespin es un inmenso planeta gaseoso, situado en las inmediaciones del sistema Anoat.<br> Su capital, Cloud City, es una ciudad artificial especializada en minería de gas.<br>A continuación, se compara el diámetro total de Bespin frente a otros <br>renombrados planetas de la galaxia. </p>
+                </div>
+                </div>
+</div>
+
+
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+
+        <!-- START THE FEATURETTES -->
+
+        <hr id="aca" class="featurette-divider">
+
+        <div class="featurette">
+          <h2 class="featurette-heading">Lando Calrissian <br> <span class="text-muted">Un hombre de estatura media.</span></h2>
+            <p class="lead">El célebre alcalde de la Ilustre Municipalidad de Cloud City. 
+              <br>Abajo, se visualiza su estatura al lado de 2 de las criaturas <br>más variopintas de la galaxia </p>
+          </div>
+          <div id="here2">
+          </div>
+        </div>
+        <!-- /END THE FEATURETTES -->
+
+      </div><!-- /.container -->
+
+
+      <!-- FOOTER -->
+      <footer class="container">
+        <p class="float-right"><a href="#">Volver a Bespin.</a></p>
+        <p>&copy;2018 Ilustre Municipalidad de Cloud City, Bespin. &middot; </p>
+      </footer>
+    </main>
+
+        <!--D3 -->
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script>
+         
+         var w = 1200, h = 220, f = 800, p=1;
+         
+         d3.json("https://swapi.co/api/planets/?format=json").then(function(data) {
+            console.log(Object.keys(data.results).length);
+
+
+         var svg = d3.select("#here1")
+                  .append("svg")
+                  .attr("width", w)
+                  .attr("height", h)
+                  //.style("background","#EEEEEE");
+
+
+               for (var i = 0; i < data.results.length; i++) {
+            console.log(data.results[i].name);
+            console.log(data.results[i].diameter);
+            var radio = (data.results[i].diameter)/2;
+            console.log(radio);
+
+            var space = (i+1)*w/(data.results.length+1);
+
+          svg.append("circle")
+              .attr("cx", space) //.attr("cx", (i+1)*w/(data.results.length+1))           
+              .attr("cy", function(d) { return h/2.5; })
+              .attr("r", radio/f)
+              .attr("fill","#000000");
+          svg.append("text")
+              .attr("x", space)
+              .attr("y", function(d, i) { return (h/1.16); })
+              .attr("fill","#000000")
+              .attr('text-anchor','middle')
+              .text(function(d) { return data.results[i].name; })
+          svg.append("text")
+                .attr("x", space)
+                .attr("y", function(d, i) { return (h/1.06); })
+                .attr("fill","#333333")
+                .attr('text-anchor','middle')      
+                .text(function(d) { return "("+radio*2+" kms)"; })
+                .style("font-size","10px")
+
+          }
+
+         })
+
+       // P5
+
+    </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+  <!--escribo el script/sketch-->
+  <script>
+
+  var imglando;
+  var imgyoda;
+  var datolando;
+  var datoyoda;
+  var datochewie;
+
+  function preload() {
+  var url='https://swapi.co/api/people/25/?format=json';
+  datolando = loadJSON(url);
+
+  var url='https://swapi.co/api/people/20/?format=json';
+  datoyoda = loadJSON(url);
+
+  var url='https://swapi.co/api/people/13/?format=json';
+  datochewie = loadJSON(url);
+
+
+  imglando = loadImage("https://vignette.wikia.nocookie.net/es.starwars/images/c/c2/Lando_Calrissian.png");
+  imgyoda = loadImage("https://vignette.wikia.nocookie.net/disney/images/9/95/Master_Yoda.png");
+  imgchewie = loadImage("https://vignette.wikia.nocookie.net/es.starwars/images/1/1e/Chewbacca-Fathead.png");
+} 
+  function setup() {
+    var canvas = createCanvas(1000, 450);
+    canvas.parent('here2');
+  }
+
+function draw(){
+  background(255);
+    var fh = 1.6;
+    textSize(10);
+    image(imglando,500,400,120,-datolando.height*fh);
+    fill (0,0,0)
+    text(datolando.height + " cm",500,(390-datolando.height*fh));
+    text(datolando.name ,500,420);
+
+    image(imgyoda,800,400,80,-datoyoda.height*fh);
+    imgyoda.filter(GRAY);
+    text(datoyoda.height + " cm",800,(390-datoyoda.height*fh));
+    text(datoyoda.name ,800,420);
+
+    image(imgchewie,70,400,180, -datochewie.height*fh);
+    imgchewie.filter(GRAY);
+    text(datochewie.height + " cm",70,(390-datochewie.height*fh));
+    text(datochewie.name ,70,420);
+    strokeWeight(.4);
+    line(0, 400, 1000, 400);
+    line(0, 400-datochewie.height*fh, 1000, 400-datochewie.height*fh);
+        line(0, 400-datoyoda.height*fh, 1000, 400-datoyoda.height*fh);
+            line(0, 400-datolando.height*fh, 1000, 400-datolando.height*fh);
+
+
+
+
+
+  }
+
+  </script>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../../../assets/js/vendor/holder.min.js"></script>
+  </body>
+</html>
